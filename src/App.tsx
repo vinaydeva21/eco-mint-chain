@@ -16,6 +16,10 @@ import Governance from "./pages/Governance";
 import Funding from "./pages/Funding";
 import Learning from "./pages/Learning";
 import Profile from "./pages/Profile";
+import { AuthProvider } from "./contexts/AuthContext";
+import RequireAuth from "./components/auth/RequireAuth";
+import RequireRole from "./components/auth/RequireRole";
+import Unauthorized from "./pages/Unauthorized";
 
 const queryClient = new QueryClient();
 
@@ -26,21 +30,106 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/dashboard/operator" element={<OperatorDashboard />} />
-            <Route path="/dashboard/regulator" element={<RegulatorDashboard />} />
-            <Route path="/mrv" element={<MRV />} />
-            <Route path="/credits" element={<Credits />} />
-            <Route path="/marketplace" element={<Marketplace />} />
-            <Route path="/governance" element={<Governance />} />
-            <Route path="/funding" element={<Funding />} />
-            <Route path="/learning" element={<Learning />} />
-            <Route path="/profile" element={<Profile />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AuthProvider>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/unauthorized" element={<Unauthorized />} />
+
+              <Route
+                path="/dashboard/operator"
+                element={
+                  <RequireAuth>
+                    <RequireRole roles={["Operator"]}>
+                      <OperatorDashboard />
+                    </RequireRole>
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/dashboard/regulator"
+                element={
+                  <RequireAuth>
+                    <RequireRole roles={["Regulator"]}>
+                      <RegulatorDashboard />
+                    </RequireRole>
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/mrv"
+                element={
+                  <RequireAuth>
+                    <RequireRole roles={["Regulator", "Verifier"]}>
+                      <MRV />
+                    </RequireRole>
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/credits"
+                element={
+                  <RequireAuth>
+                    <RequireRole roles={["Regulator", "Verifier"]}>
+                      <Credits />
+                    </RequireRole>
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/marketplace"
+                element={
+                  <RequireAuth>
+                    <RequireRole roles={["Buyer", "Investor"]}>
+                      <Marketplace />
+                    </RequireRole>
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/governance"
+                element={
+                  <RequireAuth>
+                    <RequireRole roles={["DAO Member"]}>
+                      <Governance />
+                    </RequireRole>
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/funding"
+                element={
+                  <RequireAuth>
+                    <RequireRole roles={["DAO Member", "Investor"]}>
+                      <Funding />
+                    </RequireRole>
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/learning"
+                element={
+                  <RequireAuth>
+                    <RequireRole roles={["Operator", "Trainer"]}>
+                      <Learning />
+                    </RequireRole>
+                  </RequireAuth>
+                }
+              />
+
+              <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
+
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
     </HelmetProvider>

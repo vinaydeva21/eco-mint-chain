@@ -7,6 +7,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { defaultDashboardForRole, type Role } from "@/lib/rbac";
 
 const roles = [
   "Operator",
@@ -27,6 +30,8 @@ const Login = () => {
   const [role, setRole] = useState<string>("");
   const [kycFile, setKycFile] = useState<File | null>(null);
   const [gatewayId, setGatewayId] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const stepIndex = steps.indexOf(activeStep);
   const progress = Math.round(((stepIndex + 1) / steps.length) * 100);
@@ -36,6 +41,12 @@ const Login = () => {
   };
   const back = () => {
     if (stepIndex > 0) setActiveStep(steps[stepIndex - 1]);
+  };
+
+  const handleFinish = () => {
+    if (!gatewayId || !role) return;
+    login({ role: role as Role });
+    navigate(defaultDashboardForRole[role as Role]);
   };
 
   return (
@@ -131,7 +142,7 @@ const Login = () => {
                     <Button variant="outline" onClick={back}>Back</Button>
                     <div className="flex gap-3">
                       <Button variant="secondary">Connect Wallet (DID)</Button>
-                      <Button variant="hero" disabled={!gatewayId}>Finish & Go to Dashboard</Button>
+                      <Button variant="hero" disabled={!gatewayId || !role} onClick={handleFinish}>Finish & Go to Dashboard</Button>
                     </div>
                   </div>
                 </CardContent>

@@ -1,7 +1,9 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import BrandLogo from "@/components/BrandLogo";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import { canAccess } from "@/lib/rbac";
 
 const navItems = [
   { to: "/dashboard/operator", label: "Operator" },
@@ -20,7 +22,7 @@ const TopNav: React.FC = () => {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <BrandLogo />
         <nav className="hidden md:flex items-center gap-6 text-sm">
-          {navItems.map((item) => (
+          {visibleItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
@@ -33,12 +35,30 @@ const TopNav: React.FC = () => {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <Link to="/login">
-            <Button variant="outline" size="sm">Sign in</Button>
-          </Link>
-          <Link to="/login">
-            <Button variant="hero" size="sm">Get started</Button>
-          </Link>
+          {!user ? (
+            <>
+              <Link to="/login">
+                <Button variant="outline" size="sm">Sign in</Button>
+              </Link>
+              <Link to="/login">
+                <Button variant="hero" size="sm">Get started</Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <NavLink to="/profile" className="text-sm text-muted-foreground mr-2">{user.role}</NavLink>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  logout();
+                  navigate("/login");
+                }}
+              >
+                Logout
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </header>
