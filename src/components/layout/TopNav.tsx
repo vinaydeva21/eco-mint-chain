@@ -17,6 +17,9 @@ const navItems = [
 ];
 
 const TopNav: React.FC = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const visibleItems = user ? navItems.filter((item) => canAccess(user.role, item.to)) : [];
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
