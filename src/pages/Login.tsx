@@ -10,7 +10,6 @@ import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { defaultDashboardForRole, type Role } from "@/lib/rbac";
-import WalletConnectPanel from "@/web3/components/WalletConnectPanel";
 
 const roles = [
   "Operator",
@@ -139,10 +138,10 @@ const Login = () => {
                     <Input id="gateway" placeholder="e.g., KN-CHN-001" value={gatewayId} onChange={(e) => setGatewayId(e.target.value)} />
                     <p className="text-xs text-muted-foreground">Example sensors: COD, BOD, pH, Flow, Energy</p>
                   </div>
-                  <div className="space-y-6">
-                    <WalletConnectPanel />
-                    <div className="flex flex-wrap gap-3 justify-between">
-                      <Button variant="outline" onClick={back}>Back</Button>
+                  <div className="flex flex-wrap gap-3 justify-between">
+                    <Button variant="outline" onClick={back}>Back</Button>
+                    <div className="flex gap-3">
+                      <Button variant="secondary">Connect Wallet (DID)</Button>
                       <Button variant="hero" disabled={!gatewayId || !role} onClick={handleFinish}>Finish & Go to Dashboard</Button>
                     </div>
                   </div>
