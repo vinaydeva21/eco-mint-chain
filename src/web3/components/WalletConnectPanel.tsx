@@ -1,8 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useAccount, useBalance, useConnect, useDisconnect } from "wagmi";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-import { useConnection, useWallet as useSolanaWallet } from "@solana/wallet-adapter-react";
+// Solana connect temporarily disabled (adapter install pending)
 import { CardanoWallet, useWallet as useCardanoWallet } from "@meshsdk/react";
 
 function short(addr?: string | null, left = 6, right = 4) {
@@ -17,22 +16,6 @@ export const WalletConnectPanel: React.FC = () => {
   const { disconnect } = useDisconnect();
   const { data: ethBal } = useBalance({ address, unit: "ether", query: { enabled: !!address } });
 
-  // Solana
-  const { connection } = useConnection();
-  const { publicKey } = useSolanaWallet();
-  const [solBalance, setSolBalance] = React.useState<number | null>(null);
-  React.useEffect(() => {
-    let active = true;
-    async function run() {
-      if (!publicKey) return setSolBalance(null);
-      const lamports = await connection.getBalance(publicKey);
-      if (active) setSolBalance(lamports / 1e9);
-    }
-    run();
-    return () => {
-      active = false;
-    };
-  }, [publicKey, connection]);
 
   // Cardano (Mesh)
   const { connected: cardanoConnected, wallet } = useCardanoWallet();
@@ -73,16 +56,6 @@ export const WalletConnectPanel: React.FC = () => {
         )}
       </section>
 
-      <section className="rounded-lg border p-4">
-        <h3 className="font-medium mb-2">Solana</h3>
-        <div className="flex items-center justify-between gap-3">
-          <WalletMultiButton className="!bg-primary !text-primary-foreground" />
-          <div className="text-sm">
-            <div>Address: {short(publicKey?.toBase58?.()) || "—"}</div>
-            <div className="text-muted-foreground">SOL: {solBalance?.toFixed?.(4) ?? "—"}</div>
-          </div>
-        </div>
-      </section>
 
       <section className="rounded-lg border p-4">
         <h3 className="font-medium mb-2">Cardano</h3>

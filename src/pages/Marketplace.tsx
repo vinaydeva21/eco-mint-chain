@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAccount, useBalance } from "wagmi";
-import { useWallet as useSolanaWallet } from "@solana/wallet-adapter-react";
+
 import { useWallet as useCardanoWallet } from "@meshsdk/react";
 import { toast } from "@/components/ui/use-toast";
 
@@ -24,8 +24,7 @@ const Marketplace = () => {
   // Wallets
   const { address: evmAddress } = useAccount();
   const { data: evmBalance } = useBalance({ address: evmAddress, unit: "ether", query: { enabled: !!evmAddress } });
-  const { publicKey } = useSolanaWallet();
-  const solAddress = publicKey?.toBase58?.() || "";
+  const solAddress = "";
   const { connected: adaConnected, wallet } = useCardanoWallet();
   const [adaAddr, setAdaAddr] = useState("");
   useEffect(() => { (async () => { if (adaConnected && wallet) setAdaAddr(await wallet.getChangeAddress()); else setAdaAddr(""); })(); }, [adaConnected, wallet]);
