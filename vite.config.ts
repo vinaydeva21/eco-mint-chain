@@ -12,11 +12,29 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     wasm(),
-    mode === 'development' && componentTagger(),
+    mode === "development" && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    target: "esnext",
+    modulePreload: { polyfill: true },
+  },
+  esbuild: {
+    target: "esnext",
+    supported: {
+      "top-level-await": true,
+    },
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: "esnext",
+      supported: {
+        "top-level-await": true,
+      },
     },
   },
 }));
