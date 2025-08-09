@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-
+import LearningWidget from "@/features/learning/components/LearningWidget";
 const metricCards = [
   { key: "COD", value: 82, unit: "mg/L", status: "ok" },
   { key: "BOD", value: 24, unit: "mg/L", status: "ok" },
@@ -119,6 +119,10 @@ const OperatorDashboard = () => {
               </div>
             </CardContent>
           </Card>
+        </section>
+
+        <section className="mt-6">
+          <LearningWidget metricKeysNeedingAttention={metricCards.filter(m => m.status !== "ok").map((m) => m.key)} />
         </section>
       </main>
     </div>
