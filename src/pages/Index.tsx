@@ -3,6 +3,11 @@ import TopNav from "@/components/layout/TopNav";
 import hero from "@/assets/hero-water-tech.jpg";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import TiltCard from "@/components/motion/TiltCard";
+import ScrollReveal from "@/components/motion/ScrollReveal";
 
 const Index = () => {
   return (
@@ -14,6 +19,7 @@ const Index = () => {
       </Helmet>
       <TopNav />
       <main className="flex-1">
+        {/* Hero */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-primary animated-gradient opacity-20" aria-hidden="true" />
           <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-2 md:py-24 items-center">
@@ -40,17 +46,201 @@ const Index = () => {
             </div>
           </div>
         </section>
-        <section className="container mx-auto px-4 pb-24 grid gap-6 md:grid-cols-3">
-          {[
-            { title: "Real-time Sensors", desc: "Track COD, BOD, pH, flow, and energy with tamper-proof logs."},
-            { title: "AI Optimization", desc: "Smart dosing and anomaly detection to improve performance."},
-            { title: "Credit Issuance", desc: "Mint water quality and GHG reduction credits on-chain."},
-          ].map((b, i) => (
-            <article key={i} className="rounded-lg border bg-card p-6 shadow-sm transition-smooth hover:shadow-elevated">
-              <h2 className="text-xl font-semibold mb-2">{b.title}</h2>
-              <p className="text-muted-foreground">{b.desc}</p>
-            </article>
-          ))}
+
+        {/* What is KarbonLedger */}
+        <section className="container mx-auto px-4 py-16">
+          <div className="grid gap-8 md:grid-cols-2 items-start">
+            <div>
+              <ScrollReveal>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">What is KarbonLedger?</h2>
+                <p className="text-muted-foreground mb-4">
+                  KarbonLedger helps Effluent Treatment Plants (ETPs) turn pollution control into climate-positive action using real-time IoT monitoring, AI models, and blockchain-backed MRV—unlocking future carbon asset monetization.
+                </p>
+                <p className="text-muted-foreground">
+                  Reduce pollution, validate CO₂e savings, and automate compliance—built for transparency, efficiency, and impact.
+                </p>
+              </ScrollReveal>
+            </div>
+            <ScrollReveal>
+              <TiltCard className="p-6">
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li>• Real-time COD, BOD, flow, and energy monitoring</li>
+                  <li>• AI verification of CO₂e reductions</li>
+                  <li>• Blockchain-backed, tamper-proof performance logs</li>
+                  <li>• Pathway to tokenized credits (KARB) and revenue</li>
+                </ul>
+              </TiltCard>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* How It Works */}
+        <section className="container mx-auto px-4 pb-8">
+          <ScrollReveal>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">How It Works</h2>
+          </ScrollReveal>
+          <ScrollReveal>
+            <Tabs defaultValue="sensors" className="w-full">
+              <TabsList className="mb-4">
+                <TabsTrigger value="sensors">1. Sensors</TabsTrigger>
+                <TabsTrigger value="ai">2. AI Models</TabsTrigger>
+                <TabsTrigger value="chain">3. Blockchain</TabsTrigger>
+                <TabsTrigger value="monetize">4. Monetization</TabsTrigger>
+              </TabsList>
+              <TabsContent value="sensors" className="focus:outline-none">
+                <TiltCard className="p-6">
+                  <p className="text-muted-foreground">
+                    Install IoT sensors to continuously stream COD, BOD, flow, and energy data to the platform for real-time visibility.
+                  </p>
+                </TiltCard>
+              </TabsContent>
+              <TabsContent value="ai" className="focus:outline-none">
+                <TiltCard className="p-6">
+                  <p className="text-muted-foreground">
+                    AI algorithms verify pollution reductions and compute CO₂e savings, delivering accurate, real-time insights.
+                  </p>
+                </TiltCard>
+              </TabsContent>
+              <TabsContent value="chain" className="focus:outline-none">
+                <TiltCard className="p-6">
+                  <p className="text-muted-foreground">
+                    Tamper-proof records on-chain enable transparent, real-time compliance reporting to regulators.
+                  </p>
+                </TiltCard>
+              </TabsContent>
+              <TabsContent value="monetize" className="focus:outline-none">
+                <TiltCard className="p-6">
+                  <p className="text-muted-foreground">
+                    Verified reductions will be tokenized as carbon credits (KARB), opening new revenue for high-performing ETPs.
+                  </p>
+                </TiltCard>
+              </TabsContent>
+            </Tabs>
+          </ScrollReveal>
+        </section>
+
+        {/* Why Choose */}
+        <section className="container mx-auto px-4 py-16">
+          <ScrollReveal>
+            <h2 className="text-2xl md:text-3xl font-bold mb-8">Why Choose KarbonLedger?</h2>
+          </ScrollReveal>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                title: "Streamline Compliance",
+                desc: "Automated, real-time reporting to regulators reduces paperwork and inspections.",
+              },
+              {
+                title: "Data Transparency",
+                desc: "Tamper-proof, blockchain-backed data and AI-verified claims.",
+              },
+              {
+                title: "Future Monetization",
+                desc: "Convert verified CO₂e reductions into carbon assets.",
+              },
+              {
+                title: "Operational Optimization",
+                desc: "Reduce energy costs and improve efficiency with actionable insights.",
+              },
+            ].map((c, i) => (
+              <ScrollReveal key={i}>
+                <TiltCard className="p-5 h-full">
+                  <h3 className="font-semibold mb-2">{c.title}</h3>
+                  <p className="text-sm text-muted-foreground">{c.desc}</p>
+                </TiltCard>
+              </ScrollReveal>
+            ))}
+          </div>
+        </section>
+
+        {/* Who Benefits */}
+        <section className="container mx-auto px-4 pb-16">
+          <ScrollReveal>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Who Benefits?</h2>
+          </ScrollReveal>
+          <ScrollReveal>
+            <div className="rounded-xl border bg-card">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Stakeholder</TableHead>
+                    <TableHead>Role</TableHead>
+                    <TableHead>Benefit</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {[
+                    { s: "ETP Operators", r: "Wastewater treatment", b: "Monetize CO₂e reductions; improve efficiency" },
+                    { s: "SPCB Regulators", r: "Compliance oversight", b: "Real-time access to verified data" },
+                    { s: "UNDP / NGOs", r: "Sustainability impact", b: "Track SDG outcomes with verified data" },
+                    { s: "Credit Buyers / ESG Funds", r: "Purchase credits", b: "Buy verified CO₂e to meet ESG targets" },
+                    { s: "Worker Cooperatives", r: "DAO governance", b: "Share in tokenized revenue" },
+                  ].map((row, i) => (
+                    <TableRow key={i}>
+                      <TableCell className="font-medium">{row.s}</TableCell>
+                      <TableCell>{row.r}</TableCell>
+                      <TableCell className="text-muted-foreground">{row.b}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </ScrollReveal>
+        </section>
+
+        {/* Get Started */}
+        <section className="container mx-auto px-4 pb-16">
+          <ScrollReveal>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Get Started</h2>
+          </ScrollReveal>
+          <ScrollReveal>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>Step 1: Install Sensors</AccordionTrigger>
+                <AccordionContent>
+                  KarbonLedger provides IoT sensors for real-time monitoring at no upfront cost.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>Step 2: Real-Time Data Collection</AccordionTrigger>
+                <AccordionContent>
+                  Begin collecting COD, flow, and energy data—our AI models compute CO₂e savings continuously.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3">
+                <AccordionTrigger>Step 3: Future Monetization</AccordionTrigger>
+                <AccordionContent>
+                  As the system is validated, convert reductions into carbon assets to create a new revenue stream.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </ScrollReveal>
+        </section>
+
+        {/* Contact */}
+        <section className="container mx-auto px-4 pb-24">
+          <ScrollReveal>
+            <div className="grid gap-4 md:grid-cols-2 items-center">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-2">Get in Touch</h2>
+                <p className="text-muted-foreground mb-4">
+                  Join the movement for cleaner water and climate action with KarbonLedger.
+                </p>
+                <a
+                  className="inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm transition-smooth hover:shadow-elevated"
+                  href="mailto:hello@konma.io"
+                >
+                  Email: hello@konma.io
+                </a>
+              </div>
+              <TiltCard className="p-6">
+                <h3 className="font-semibold mb-2">Future Impact</h3>
+                <p className="text-sm text-muted-foreground">
+                  Manage pollution better, contribute to climate action, and unlock verified carbon assets that benefit operators and global goals.
+                </p>
+              </TiltCard>
+            </div>
+          </ScrollReveal>
         </section>
       </main>
       <footer className="border-t">
