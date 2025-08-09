@@ -8,6 +8,7 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import TiltCard from "@/components/motion/TiltCard";
 import ScrollReveal from "@/components/motion/ScrollReveal";
+import { Activity, Cpu, ShieldCheck, Coins, FileCheck2, Gauge, Factory, Gavel, Sprout, Briefcase, Users, Mail } from "lucide-react";
 
 const Index = () => {
   return (
@@ -42,7 +43,7 @@ const Index = () => {
                 alt="Abstract water-tech gradient with data network lines"
                 className="w-full h-auto rounded-xl border shadow-elevated"
               />
-              <div className="absolute -bottom-6 -right-6 hidden md:block w-40 h-40 rounded-xl bg-gradient-primary blur-2xl opacity-40" aria-hidden="true"/>
+              <div className="absolute -bottom-6 -right-6 hidden md:block w-40 h-40 rounded-xl bg-gradient-primary blur-2xl opacity-40 pulse" aria-hidden="true"/>
             </div>
           </div>
         </section>
@@ -64,10 +65,10 @@ const Index = () => {
             <ScrollReveal>
               <TiltCard className="p-6">
                 <ul className="space-y-3 text-sm text-muted-foreground">
-                  <li>• Real-time COD, BOD, flow, and energy monitoring</li>
-                  <li>• AI verification of CO₂e reductions</li>
-                  <li>• Blockchain-backed, tamper-proof performance logs</li>
-                  <li>• Pathway to tokenized credits (KARB) and revenue</li>
+                  <li className="flex items-start gap-3"><Activity className="mt-0.5" size={18} aria-hidden /><span>Real-time COD, BOD, flow, and energy monitoring</span></li>
+                  <li className="flex items-start gap-3"><Cpu className="mt-0.5" size={18} aria-hidden /><span>AI verification of CO₂e reductions</span></li>
+                  <li className="flex items-start gap-3"><ShieldCheck className="mt-0.5" size={18} aria-hidden /><span>Blockchain-backed, tamper-proof performance logs</span></li>
+                  <li className="flex items-start gap-3"><Coins className="mt-0.5" size={18} aria-hidden /><span>Pathway to tokenized credits (KARB) and revenue</span></li>
                 </ul>
               </TiltCard>
             </ScrollReveal>
@@ -82,10 +83,10 @@ const Index = () => {
           <ScrollReveal>
             <Tabs defaultValue="sensors" className="w-full">
               <TabsList className="mb-4">
-                <TabsTrigger value="sensors">1. Sensors</TabsTrigger>
-                <TabsTrigger value="ai">2. AI Models</TabsTrigger>
-                <TabsTrigger value="chain">3. Blockchain</TabsTrigger>
-                <TabsTrigger value="monetize">4. Monetization</TabsTrigger>
+                <TabsTrigger value="sensors" className="gap-2"><Activity size={16} aria-hidden /> Sensors</TabsTrigger>
+                <TabsTrigger value="ai" className="gap-2"><Cpu size={16} aria-hidden /> AI Models</TabsTrigger>
+                <TabsTrigger value="chain" className="gap-2"><ShieldCheck size={16} aria-hidden /> Blockchain</TabsTrigger>
+                <TabsTrigger value="monetize" className="gap-2"><Coins size={16} aria-hidden /> Monetization</TabsTrigger>
               </TabsList>
               <TabsContent value="sensors" className="focus:outline-none">
                 <TiltCard className="p-6">
@@ -145,6 +146,7 @@ const Index = () => {
             ].map((c, i) => (
               <ScrollReveal key={i}>
                 <TiltCard className="p-5 h-full">
+                  <div className="mb-3 text-primary">{(i === 0 && <FileCheck2 size={20} aria-hidden />) || (i === 1 && <ShieldCheck size={20} aria-hidden />) || (i === 2 && <Coins size={20} aria-hidden />) || <Gauge size={20} aria-hidden />}</div>
                   <h3 className="font-semibold mb-2">{c.title}</h3>
                   <p className="text-sm text-muted-foreground">{c.desc}</p>
                 </TiltCard>
@@ -177,7 +179,16 @@ const Index = () => {
                     { s: "Worker Cooperatives", r: "DAO governance", b: "Share in tokenized revenue" },
                   ].map((row, i) => (
                     <TableRow key={i}>
-                      <TableCell className="font-medium">{row.s}</TableCell>
+                      <TableCell className="font-medium">
+                        <span className="inline-flex items-center gap-2">
+                          {i === 0 && <Factory size={16} aria-hidden />} 
+                          {i === 1 && <Gavel size={16} aria-hidden />} 
+                          {i === 2 && <Sprout size={16} aria-hidden />} 
+                          {i === 3 && <Briefcase size={16} aria-hidden />} 
+                          {i === 4 && <Users size={16} aria-hidden />} 
+                          <span>{row.s}</span>
+                        </span>
+                      </TableCell>
                       <TableCell>{row.r}</TableCell>
                       <TableCell className="text-muted-foreground">{row.b}</TableCell>
                     </TableRow>
@@ -229,8 +240,9 @@ const Index = () => {
                 <a
                   className="inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm transition-smooth hover:shadow-elevated"
                   href="mailto:hello@konma.io"
+                  aria-label="Email hello@konma.io"
                 >
-                  Email: hello@konma.io
+                  <Mail size={16} aria-hidden /> Email: hello@konma.io
                 </a>
               </div>
               <TiltCard className="p-6">
