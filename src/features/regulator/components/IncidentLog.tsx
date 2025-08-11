@@ -7,13 +7,13 @@ interface IncidentLogProps {
   incidents: Incident[];
 }
 
-const severityVariant: Record<Incident["severity"], string> = {
+const severityVariant: Record<Incident["severity"], "default" | "destructive" | "outline" | "secondary"> = {
   Low: "outline",
   Medium: "secondary",
   High: "destructive",
 };
 
-const statusTone: Record<Incident["status"], string> = {
+const statusTone: Record<Incident["status"], "default" | "destructive" | "outline" | "secondary"> = {
   Open: "destructive",
   Investigating: "secondary",
   Resolved: "default",
@@ -42,7 +42,7 @@ const IncidentLog: React.FC<IncidentLogProps> = ({ incidents }) => {
                 <Badge variant={severityVariant[i.severity]}>{i.severity}</Badge>
               </TableCell>
               <TableCell>
-                <Badge variant={statusTone[i.status] as any}>{i.status}</Badge>
+                <Badge variant={statusTone[i.status]}>{i.status}</Badge>
               </TableCell>
               <TableCell className="max-w-[480px] truncate" title={i.description}>
                 {i.description}
