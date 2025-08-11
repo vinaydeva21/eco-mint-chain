@@ -5,11 +5,12 @@ import ProjectCard from "@/features/funding/components/ProjectCard";
 import ProjectDialog from "@/features/funding/components/ProjectDialog";
 import { useState } from "react";
 import { useFunding } from "@/features/funding/useFunding";
+import type { Project } from "@/features/funding/types";
 
 const Funding = () => {
-  const { filtered } = useFunding();
+  const { filtered, filters, setFilters, clearFilters } = useFunding();
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<null | (typeof filtered)[number]>(null);
+  const [selected, setSelected] = useState<Project | null>(null);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -25,7 +26,7 @@ const Funding = () => {
             <h1 className="text-3xl font-semibold">Funding & Crowdfunding</h1>
             <p className="text-muted-foreground">Project cards, progress bars, and donor visibility.</p>
           </header>
-          <FundingFilters />
+          <FundingFilters filters={filters} setFilters={setFilters} clearFilters={clearFilters} />
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((p) => (
               <ProjectCard key={p.id} project={p} onOpen={(prj) => { setSelected(prj); setOpen(true); }} />
