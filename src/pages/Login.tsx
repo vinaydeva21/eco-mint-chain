@@ -4,21 +4,57 @@ import TopNav from "@/components/layout/TopNav";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { defaultDashboardForRole, type Role } from "@/lib/rbac";
+import { Factory, Gavel, ShieldCheck, ShoppingCart, Users, TrendingUp, GraduationCap } from "lucide-react";
 
-const roles = [
-  "Operator",
-  "Regulator",
-  "Verifier",
-  "Buyer",
-  "DAO Member",
-  "Investor",
-  "Trainer",
+const roleData = [
+  {
+    id: "Operator",
+    name: "Operator",
+    description: "Manage and monitor CETP operations",
+    icon: Factory,
+  },
+  {
+    id: "Regulator",
+    name: "Regulator", 
+    description: "Oversee compliance and regulatory matters",
+    icon: Gavel,
+  },
+  {
+    id: "Verifier",
+    name: "Verifier",
+    description: "Verify and validate carbon credit claims",
+    icon: ShieldCheck,
+  },
+  {
+    id: "Buyer",
+    name: "Buyer",
+    description: "Purchase carbon credits from marketplace",
+    icon: ShoppingCart,
+  },
+  {
+    id: "DAO Member",
+    name: "DAO Member",
+    description: "Participate in governance and voting",
+    icon: Users,
+  },
+  {
+    id: "Investor",
+    name: "Investor",
+    description: "Fund carbon credit projects",
+    icon: TrendingUp,
+  },
+  {
+    id: "Trainer",
+    name: "Trainer",
+    description: "Provide education and training resources",
+    icon: GraduationCap,
+  },
 ];
 
 const steps = ["Role", "KYC"] as const;
@@ -85,18 +121,37 @@ const Login = () => {
                   <CardDescription>Choose how you will use the CETP instance.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="role">Role</Label>
-                    <Select onValueChange={setRole}>
-                      <SelectTrigger id="role">
-                        <SelectValue placeholder="Select role" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {roles.map((r) => (
-                          <SelectItem key={r} value={r}>{r}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  <div className="space-y-4">
+                    <Label>Choose your role</Label>
+                    <RadioGroup value={role} onValueChange={setRole} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {roleData.map((roleItem) => {
+                        const IconComponent = roleItem.icon;
+                        return (
+                          <div key={roleItem.id} className="relative">
+                            <RadioGroupItem 
+                              value={roleItem.id} 
+                              id={roleItem.id}
+                              className="peer sr-only"
+                            />
+                            <Label
+                              htmlFor={roleItem.id}
+                              className={`
+                                flex flex-col items-center justify-center rounded-lg border-2 border-muted p-6 cursor-pointer
+                                transition-all duration-200 hover:border-primary/50 hover:bg-secondary/50
+                                peer-checked:border-primary peer-checked:bg-primary/5
+                                peer-focus-visible:ring-2 peer-focus-visible:ring-ring
+                              `}
+                            >
+                              <IconComponent className="h-8 w-8 mb-3 text-muted-foreground peer-checked:text-primary" />
+                              <span className="text-lg font-semibold mb-2">{roleItem.name}</span>
+                              <span className="text-sm text-muted-foreground text-center leading-relaxed">
+                                {roleItem.description}
+                              </span>
+                            </Label>
+                          </div>
+                        );
+                      })}
+                    </RadioGroup>
                   </div>
                   <div className="flex justify-between">
                     <div />
