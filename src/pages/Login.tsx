@@ -126,29 +126,35 @@ const Login = () => {
                     <RadioGroup value={role} onValueChange={setRole} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {roleData.map((roleItem) => {
                         const IconComponent = roleItem.icon;
+                        const isSelected = role === roleItem.id;
                         return (
-                          <div key={roleItem.id} className="relative">
+                          <Label
+                            key={roleItem.id}
+                            htmlFor={roleItem.id}
+                            className={`
+                              flex flex-col items-center justify-center rounded-lg border-2 p-6 cursor-pointer
+                              transition-all duration-200 hover:border-primary/50 hover:bg-secondary/50
+                              ${isSelected 
+                                ? 'border-primary bg-primary/5' 
+                                : 'border-muted'
+                              }
+                            `}
+                          >
                             <RadioGroupItem 
                               value={roleItem.id} 
                               id={roleItem.id}
-                              className="peer sr-only"
+                              className="sr-only"
                             />
-                            <Label
-                              htmlFor={roleItem.id}
-                              className={`
-                                flex flex-col items-center justify-center rounded-lg border-2 border-muted p-6 cursor-pointer
-                                transition-all duration-200 hover:border-primary/50 hover:bg-secondary/50
-                                peer-checked:border-primary peer-checked:bg-primary/5
-                                peer-focus-visible:ring-2 peer-focus-visible:ring-ring
-                              `}
-                            >
-                              <IconComponent className="h-8 w-8 mb-3 text-muted-foreground peer-checked:text-primary" />
-                              <span className="text-lg font-semibold mb-2">{roleItem.name}</span>
-                              <span className="text-sm text-muted-foreground text-center leading-relaxed">
-                                {roleItem.description}
-                              </span>
-                            </Label>
-                          </div>
+                            <IconComponent 
+                              className={`h-8 w-8 mb-3 transition-colors ${
+                                isSelected ? 'text-primary' : 'text-muted-foreground'
+                              }`} 
+                            />
+                            <span className="text-lg font-semibold mb-2">{roleItem.name}</span>
+                            <span className="text-sm text-muted-foreground text-center leading-relaxed">
+                              {roleItem.description}
+                            </span>
+                          </Label>
                         );
                       })}
                     </RadioGroup>
