@@ -45,12 +45,8 @@ const Index = () => {
             <div>
               <ScrollReveal>
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">What is KarbonLedger?</h2>
-                <p className="text-muted-foreground mb-4">
-                  KarbonLedger helps Effluent Treatment Plants (ETPs) turn pollution control into climate-positive action using real-time IoT monitoring, AI models, and blockchain-backed MRV—unlocking future carbon asset monetization.
-                </p>
-                <p className="text-muted-foreground">
-                  Reduce pollution, validate CO₂e savings, and automate compliance—built for transparency, efficiency, and impact.
-                </p>
+                <p className="text-muted-foreground mb-4">KarbonLedger helps Effluent Treatment Plants (ETPs) turn pollution control into climate-positive action using real-time IoT monitoring, AI models and blockchain-backed MRV—unlocking future carbon asset monetization.</p>
+                <p className="text-muted-foreground">Reduce pollution, validate CO₂e savings, and automate compliance—built for transparency, efficiency and impact.</p>
               </ScrollReveal>
             </div>
             <ScrollReveal>
