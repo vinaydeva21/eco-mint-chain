@@ -21,7 +21,7 @@ const roles = [
   "Trainer",
 ];
 
-const steps = ["Role", "KYC", "Connect Devices"] as const;
+const steps = ["Role", "KYC"] as const;
 
 type Step = typeof steps[number];
 
@@ -29,7 +29,7 @@ const Login = () => {
   const [activeStep, setActiveStep] = useState<Step>("Role");
   const [role, setRole] = useState<string>("");
   const [kycFile, setKycFile] = useState<File | null>(null);
-  const [gatewayId, setGatewayId] = useState("");
+  
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ const Login = () => {
   };
 
   const handleFinish = () => {
-    if (!gatewayId || !role) return;
+    if (!role) return;
     login({ role: role as Role });
     navigate(defaultDashboardForRole[role as Role]);
   };
@@ -120,34 +120,12 @@ const Login = () => {
                   </div>
                   <div className="flex justify-between">
                     <Button variant="outline" onClick={back}>Back</Button>
-                    <Button variant="hero" onClick={next} disabled={!kycFile}>Continue</Button>
+                    <Button variant="hero" onClick={handleFinish} disabled={!kycFile}>Finish & Go to Dashboard</Button>
                   </div>
                 </CardContent>
               </Card>
             )}
 
-            {activeStep === "Connect Devices" && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Connect Devices</CardTitle>
-                  <CardDescription>Link your IoT gateway to start streaming sensor data.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="gateway">Gateway ID</Label>
-                    <Input id="gateway" placeholder="e.g., KN-CHN-001" value={gatewayId} onChange={(e) => setGatewayId(e.target.value)} />
-                    <p className="text-xs text-muted-foreground">Example sensors: COD, BOD, pH, Flow, Energy</p>
-                  </div>
-                  <div className="flex flex-wrap gap-3 justify-between">
-                    <Button variant="outline" onClick={back}>Back</Button>
-                    <div className="flex gap-3">
-                      <Button variant="secondary">Connect Wallet (DID)</Button>
-                      <Button variant="hero" disabled={!gatewayId || !role} onClick={handleFinish}>Finish & Go to Dashboard</Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
           </div>
         </section>
       </main>

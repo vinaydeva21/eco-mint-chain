@@ -1,6 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import TopNav from "@/components/layout/TopNav";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import GlobeMap from "@/components/maps/GlobeMap";
 import Filters, { type FilterState } from "@/features/regulator/components/Filters";
 import IncidentLog from "@/features/regulator/components/IncidentLog";
@@ -11,6 +14,14 @@ import { useMemo, useState } from "react";
 const RegulatorDashboard = () => {
   const [filters, setFilters] = useState<FilterState>({ search: "", status: "All" });
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [gatewayId, setGatewayId] = useState("");
+  const [isDeviceConnected, setIsDeviceConnected] = useState(false);
+
+  const handleConnectDevice = () => {
+    if (gatewayId) {
+      setIsDeviceConnected(true);
+    }
+  };
 
   const cetps = useMemo(() => {
     return allCetps.filter((c) => {
@@ -81,6 +92,35 @@ const RegulatorDashboard = () => {
             </CardContent>
           </Card>
         </section>
+
+        {!isDeviceConnected && (
+          <section className="container mx-auto px-4 py-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Connect Devices</CardTitle>
+                <CardDescription>Link your IoT gateway to start streaming sensor data.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="gateway">Gateway ID</Label>
+                  <Input 
+                    id="gateway" 
+                    placeholder="e.g., KN-CHN-001" 
+                    value={gatewayId} 
+                    onChange={(e) => setGatewayId(e.target.value)} 
+                  />
+                  <p className="text-xs text-muted-foreground">Example sensors: COD, BOD, pH, Flow, Energy</p>
+                </div>
+                <div className="flex gap-3">
+                  <Button variant="secondary">Connect Wallet (DID)</Button>
+                  <Button variant="hero" disabled={!gatewayId} onClick={handleConnectDevice}>
+                    Connect Device
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+        )}
       </main>
     </div>
   );

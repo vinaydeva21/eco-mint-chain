@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import TopNav from "@/components/layout/TopNav";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import LearningWidget from "@/features/learning/components/LearningWidget";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 const metricCards = [
   { key: "COD", value: 82, unit: "mg/L", status: "ok" },
   { key: "BOD", value: 24, unit: "mg/L", status: "ok" },
@@ -23,6 +26,14 @@ const chartData = Array.from({ length: 24 }).map((_, i) => ({
 const OperatorDashboard = () => {
   const efficiency = 86; // mock
   const compliance = "Green"; // mock
+  const [gatewayId, setGatewayId] = useState("");
+  const [isDeviceConnected, setIsDeviceConnected] = useState(false);
+
+  const handleConnectDevice = () => {
+    if (gatewayId) {
+      setIsDeviceConnected(true);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -124,6 +135,35 @@ const OperatorDashboard = () => {
         <section className="mt-6">
           <LearningWidget metricKeysNeedingAttention={metricCards.filter(m => m.status !== "ok").map((m) => m.key)} />
         </section>
+
+        {!isDeviceConnected && (
+          <section className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Connect Devices</CardTitle>
+                <CardDescription>Link your IoT gateway to start streaming sensor data.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="gateway">Gateway ID</Label>
+                  <Input 
+                    id="gateway" 
+                    placeholder="e.g., KN-CHN-001" 
+                    value={gatewayId} 
+                    onChange={(e) => setGatewayId(e.target.value)} 
+                  />
+                  <p className="text-xs text-muted-foreground">Example sensors: COD, BOD, pH, Flow, Energy</p>
+                </div>
+                <div className="flex gap-3">
+                  <Button variant="secondary">Connect Wallet (DID)</Button>
+                  <Button variant="hero" disabled={!gatewayId} onClick={handleConnectDevice}>
+                    Connect Device
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+        )}
       </main>
     </div>
   );
