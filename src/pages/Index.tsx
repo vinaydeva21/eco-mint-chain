@@ -9,8 +9,10 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import TiltCard from "@/components/motion/TiltCard";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { Activity, Cpu, ShieldCheck, Coins, FileCheck2, Gauge, Factory, Gavel, Sprout, Briefcase, Users, Mail } from "lucide-react";
+
 const Index = () => {
-  return <div className="min-h-screen flex flex-col bg-background">
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
         <title>KarbonLedger CETP – Smart Monitoring & Credits</title>
         <meta name="description" content="Real-time CETP monitoring with AI optimization, digital MRV, and blockchain credit issuance for textile clusters." />
@@ -20,21 +22,28 @@ const Index = () => {
       <main className="flex-1">
         {/* Hero */}
         <section className="relative overflow-hidden">
-          
+          <div className="absolute inset-0 bg-gradient-primary animated-gradient opacity-20" aria-hidden="true" />
           <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-2 md:py-24 items-center">
             <div>
               <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight mb-4">
                 Blockchain-Integrated Smart Monitoring for CETPs
               </h1>
-              <p className="text-lg text-muted-foreground mb-8">Unite IoT, AI/ML, digital MRV and a marketplace to transform CETPs into transparent, revenue-generating environmental assets.</p>
+              <p className="text-lg text-muted-foreground mb-8">
+                Unite IoT, AI/ML, digital MRV, and a marketplace to transform CETPs into transparent, revenue-generating environmental assets.
+              </p>
               <div className="flex flex-wrap gap-3">
-                
-                
+                <Link to="/login"><Button variant="hero" size="lg">Launch Instance</Button></Link>
+                <Link to="/dashboard/operator"><Button variant="secondary" size="lg">View Operator Demo</Button></Link>
               </div>
             </div>
             <div className="relative">
-              <img src={hero} loading="lazy" alt="Abstract water-tech gradient with data network lines" className="w-full h-auto rounded-xl border shadow-elevated" />
-              <div className="absolute -bottom-6 -right-6 hidden md:block w-40 h-40 rounded-xl bg-gradient-primary blur-2xl opacity-40 pulse" aria-hidden="true" />
+              <img
+                src={hero}
+                loading="lazy"
+                alt="Abstract water-tech gradient with data network lines"
+                className="w-full h-auto rounded-xl border shadow-elevated"
+              />
+              <div className="absolute -bottom-6 -right-6 hidden md:block w-40 h-40 rounded-xl bg-gradient-primary blur-2xl opacity-40 pulse" aria-hidden="true"/>
             </div>
           </div>
         </section>
@@ -117,25 +126,32 @@ const Index = () => {
             <h2 className="text-2xl md:text-3xl font-bold mb-8">Why Choose KarbonLedger?</h2>
           </ScrollReveal>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {[{
-            title: "Streamline Compliance",
-            desc: "Automated, real-time reporting to regulators reduces paperwork and inspections."
-          }, {
-            title: "Data Transparency",
-            desc: "Tamper-proof, blockchain-backed data and AI-verified claims."
-          }, {
-            title: "Future Monetization",
-            desc: "Convert verified CO₂e reductions into carbon assets."
-          }, {
-            title: "Operational Optimization",
-            desc: "Reduce energy costs and improve efficiency with actionable insights."
-          }].map((c, i) => <ScrollReveal key={i}>
+            {[
+              {
+                title: "Streamline Compliance",
+                desc: "Automated, real-time reporting to regulators reduces paperwork and inspections.",
+              },
+              {
+                title: "Data Transparency",
+                desc: "Tamper-proof, blockchain-backed data and AI-verified claims.",
+              },
+              {
+                title: "Future Monetization",
+                desc: "Convert verified CO₂e reductions into carbon assets.",
+              },
+              {
+                title: "Operational Optimization",
+                desc: "Reduce energy costs and improve efficiency with actionable insights.",
+              },
+            ].map((c, i) => (
+              <ScrollReveal key={i}>
                 <TiltCard className="p-5 h-full">
-                  <div className="mb-3 text-primary">{i === 0 && <FileCheck2 size={20} aria-hidden /> || i === 1 && <ShieldCheck size={20} aria-hidden /> || i === 2 && <Coins size={20} aria-hidden /> || <Gauge size={20} aria-hidden />}</div>
+                  <div className="mb-3 text-primary">{(i === 0 && <FileCheck2 size={20} aria-hidden />) || (i === 1 && <ShieldCheck size={20} aria-hidden />) || (i === 2 && <Coins size={20} aria-hidden />) || <Gauge size={20} aria-hidden />}</div>
                   <h3 className="font-semibold mb-2">{c.title}</h3>
                   <p className="text-sm text-muted-foreground">{c.desc}</p>
                 </TiltCard>
-              </ScrollReveal>)}
+              </ScrollReveal>
+            ))}
           </div>
         </section>
 
@@ -155,27 +171,14 @@ const Index = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {[{
-                  s: "ETP Operators",
-                  r: "Wastewater treatment",
-                  b: "Monetize CO₂e reductions; improve efficiency"
-                }, {
-                  s: "SPCB Regulators",
-                  r: "Compliance oversight",
-                  b: "Real-time access to verified data"
-                }, {
-                  s: "UNDP / NGOs",
-                  r: "Sustainability impact",
-                  b: "Track SDG outcomes with verified data"
-                }, {
-                  s: "Credit Buyers / ESG Funds",
-                  r: "Purchase credits",
-                  b: "Buy verified CO₂e to meet ESG targets"
-                }, {
-                  s: "Worker Cooperatives",
-                  r: "DAO governance",
-                  b: "Share in tokenized revenue"
-                }].map((row, i) => <TableRow key={i}>
+                  {[
+                    { s: "ETP Operators", r: "Wastewater treatment", b: "Monetize CO₂e reductions; improve efficiency" },
+                    { s: "SPCB Regulators", r: "Compliance oversight", b: "Real-time access to verified data" },
+                    { s: "UNDP / NGOs", r: "Sustainability impact", b: "Track SDG outcomes with verified data" },
+                    { s: "Credit Buyers / ESG Funds", r: "Purchase credits", b: "Buy verified CO₂e to meet ESG targets" },
+                    { s: "Worker Cooperatives", r: "DAO governance", b: "Share in tokenized revenue" },
+                  ].map((row, i) => (
+                    <TableRow key={i}>
                       <TableCell className="font-medium">
                         <span className="inline-flex items-center gap-2">
                           {i === 0 && <Factory size={16} aria-hidden />} 
@@ -188,7 +191,8 @@ const Index = () => {
                       </TableCell>
                       <TableCell>{row.r}</TableCell>
                       <TableCell className="text-muted-foreground">{row.b}</TableCell>
-                    </TableRow>)}
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </div>
@@ -233,7 +237,11 @@ const Index = () => {
                 <p className="text-muted-foreground mb-4">
                   Join the movement for cleaner water and climate action with KarbonLedger.
                 </p>
-                <a className="inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm transition-smooth hover:shadow-elevated" href="mailto:hello@konma.io" aria-label="Email hello@konma.io">
+                <a
+                  className="inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm transition-smooth hover:shadow-elevated"
+                  href="mailto:hello@konma.io"
+                  aria-label="Email hello@konma.io"
+                >
                   <Mail size={16} aria-hidden /> Email: hello@konma.io
                 </a>
               </div>
@@ -252,6 +260,8 @@ const Index = () => {
           © {new Date().getFullYear()} KarbonLedger — CETP Instance
         </div>
       </footer>
-    </div>;
+    </div>
+  );
 };
+
 export default Index;
