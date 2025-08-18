@@ -11,11 +11,11 @@ const BrandLogo: React.FC<BrandLogoProps> = ({ size = 36, withText = true }) => 
   return (
     <Link to="/" className="inline-flex items-center gap-3">
       <img
-        src={logo}
+        src="/lovable-uploads/2ec089d6-b514-49a7-bf4e-f40bf5507cfa.png"
         width={size}
         height={size}
         loading="lazy"
-        alt="KarbonLedger logo – water droplet and ledger mark"
+        alt="KarbonLedger logo – geometric nature and technology design"
         className="select-none"
       />
       {withText && (
