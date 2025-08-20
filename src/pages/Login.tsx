@@ -97,7 +97,7 @@ const Login = () => {
         <section className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-3xl mx-auto">
             <header className="mb-6">
-              <h1 className="text-3xl font-bold">Welcome to KarbonLedger</h1>
+              <h1 className="text-3xl font-bold">Welcome to Streamline </h1>
               <p className="text-muted-foreground">CETP Monitoring & Credit Generation Instance</p>
             </header>
 
