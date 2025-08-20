@@ -37,31 +37,38 @@ const TopNav: React.FC = () => {
             </NavLink>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
-          {!user ? (
-            <>
-              <Link to="/login">
-                <Button variant="outline" size="sm">Sign in</Button>
-              </Link>
-              <Link to="/login">
-                <Button variant="hero" size="sm">Get started</Button>
-              </Link>
-            </>
-          ) : (
-            <>
-              <NavLink to="/profile" className="text-sm text-muted-foreground mr-2">{user.role}</NavLink>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  logout();
-                  navigate("/login");
-                }}
-              >
-                Logout
-              </Button>
-            </>
-          )}
+        <div className="flex items-center gap-4">
+          <img 
+            src="/lovable-uploads/8fe5d8ef-078b-4dec-90bc-927bf4cf39ff.png" 
+            alt="Streamline - Powered by KarbonLedger" 
+            className="h-8 w-auto"
+          />
+          <div className="flex items-center gap-2">
+            {!user ? (
+              <>
+                <Link to="/login">
+                  <Button variant="outline" size="sm">Sign in</Button>
+                </Link>
+                <Link to="/login">
+                  <Button variant="hero" size="sm">Get started</Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <NavLink to="/profile" className="text-sm text-muted-foreground mr-2">{user.role}</NavLink>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    logout();
+                    navigate("/login");
+                  }}
+                >
+                  Logout
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>
